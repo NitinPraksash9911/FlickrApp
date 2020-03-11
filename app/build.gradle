@@ -107,6 +107,7 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
     implementation "com.squareup.okhttp3:logging-interceptor:$okHttp_interceptor_version"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:2.5.0"
 
     //life cycle
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
@@ -119,20 +120,10 @@ dependencies {
     implementation "com.github.bumptech.glide:okhttp3-integration:$glide_version"
     kapt "com.github.bumptech.glide:compiler:$glide_version"
 
-    // dagger
-    implementation "com.google.dagger:dagger:$dagger2_version"
-    kapt "com.google.dagger:dagger-compiler:$dagger2_version"
-    implementation "com.google.dagger:dagger-android:$dagger2_version"
-    kapt "com.google.dagger:dagger-android-processor:$dagger2_version"
-    kapt "com.google.dagger:dagger-android-support:$dagger2_version"
+
 
     //rx java
     implementation "io.reactivex.rxjava2:rxandroid:$rxAndroidVersion"
     implementation "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
-
-    //navigation
-    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
-    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
-
 
 }

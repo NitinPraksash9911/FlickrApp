@@ -1,6 +1,7 @@
 
 package com.example.nitinflicker.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -24,7 +25,7 @@ public class Photos {
     private String total;
     @SerializedName("photo")
     @Expose
-    private List<Photo> photo = null;
+    private ArrayList<Photo> photo = null;
 
     public Integer getPage() {
         return page;
@@ -58,11 +59,11 @@ public class Photos {
         this.total = total;
     }
 
-    public List<Photo> getPhoto() {
+    public ArrayList<Photo> getPhoto() {
         return photo;
     }
 
-    public void setPhoto(List<Photo> photo) {
+    public void setPhoto(ArrayList<Photo> photo) {
         this.photo = photo;
     }
 

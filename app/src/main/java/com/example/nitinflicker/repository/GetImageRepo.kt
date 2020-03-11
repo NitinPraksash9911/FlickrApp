@@ -1,13 +1,14 @@
 package com.example.nitinflicker.repository
 
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
-import com.example.nitinflicker.BuildConfig
 import com.example.nitinflicker.model.FlickrData
+import com.example.nitinflicker.model.Photo
 import com.example.nitinflicker.network.APIAccess
+import io.reactivex.Observable
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.concurrent.TimeUnit
 
 
 /**
@@ -29,12 +30,12 @@ class GetImageRepo {
     }
 
 
-    fun searchImage(searchTag: String, pageNo: Int, perPage: Int, apiKey:String): MutableLiveData<FlickrData> {
+    fun searchImage(searchTag: String, pageNo: Int, perPage: Int, apiKey:String): Observable<ArrayList<Photo>> {
 
-        val photoLiveData = MutableLiveData<FlickrData>()
+        var data = ArrayList<Photo>()
 
         val callImageRepo = APIAccess.getPostService()
-            ?.getImageItemList(searchTag,pageNo,perPage,apiKey)
+            ?.getImageItemList("cat",1,20,"fe15b47ed990b3cd69cb4d27130d9876")
 
         callImageRepo?.enqueue(object : Callback<FlickrData> {
             override fun onResponse(
@@ -42,7 +43,7 @@ class GetImageRepo {
                 response: Response<FlickrData>
             ) {
 
-                photoLiveData.value = response.body()
+                data= response.body()!!.photos.photo
                 Log.d("apicall", response.body()!!.photos.total)
             }
 
@@ -50,12 +51,13 @@ class GetImageRepo {
 
                 Log.d("apicall", t?.message)
 
-                photoLiveData.value = null
+//                data.addAll(arrayListOf())
+
 
             }
         })
 
-        return photoLiveData
+        return Observable.just(data)
 
     }
 }

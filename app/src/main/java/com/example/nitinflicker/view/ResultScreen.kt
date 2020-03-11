@@ -39,16 +39,15 @@ class ResultScreen : AppCompatActivity() {
     }
 
     private fun initObserver() {
-        val data = imageLoadViewModel.searchImage("Tiger", 1, 20, BuildConfig.FLICKR_API_KEY)
+        imageLoadViewModel.searchImage("Cat", 1, 20, BuildConfig.FLICKR_API_KEY)
+
+        imageLoadViewModel.photoLiveData.observe(this, Observer {
+
+            imageAdapter.setListData(it)
 
 
-        data.observe(this, Observer {
-
-            if (it.photos.photo.size > 0) {
-
-                imageAdapter.setListData(it.photos.photo)
-            }
         })
+
 
     }
 }
