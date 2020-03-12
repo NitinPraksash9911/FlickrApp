@@ -15,11 +15,10 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-
         android:layout_height="match_parent"
         tools:context=".view.MainActivity">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/search_box"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"

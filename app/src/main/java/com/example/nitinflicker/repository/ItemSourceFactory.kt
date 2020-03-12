@@ -1,17 +1,17 @@
-package com.example.nitinflicker.adapter
+package com.example.nitinflicker.repository
 
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
 import androidx.paging.PageKeyedDataSource
 import com.example.nitinflicker.model.Photo
-import com.example.nitinflicker.repository.GetImageRepo
 import io.reactivex.disposables.CompositeDisposable
 
 
 /**
- * Created by   on 2020-03-12.
+ * Created by Nitin  on 2020-03-12.
  */
 class ItemSourceFactory(
+    var tag: String,
     var compositeDisposable: CompositeDisposable
 ) : DataSource.Factory<Int, Photo>() {
 
@@ -20,7 +20,10 @@ class ItemSourceFactory(
 
     override fun create(): DataSource<Int, Photo> {
 
-        val itemDataSource = ItemDataSource(compositeDisposable)
+        val itemDataSource = ItemDataSource(
+            compositeDisposable,
+            tag
+        )
         mutableLiveData.postValue(itemDataSource)
         return itemDataSource
     }

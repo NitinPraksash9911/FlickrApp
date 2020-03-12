@@ -1,13 +1,11 @@
 package com.example.nitinflicker.utils
 
 object AppConstant {
-    const val NETWORK_TIMEOUT: Long = 30
     const val SMALL = "n"
-    const val MEDIUM = "-"
 
     const val PAGE_ITEM= 20
     const val FIRST_PAGE = 1
-    const val TAG = "Cat"
+    const val TAG = "searchTag"
 
     fun getImageUrl(
         id: String,

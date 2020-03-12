@@ -1,4 +1,4 @@
-package com.example.nitinflicker.adapter
+package com.example.nitinflicker.repository
 
 import androidx.paging.PageKeyedDataSource
 import com.example.nitinflicker.BuildConfig
@@ -13,7 +13,10 @@ import io.reactivex.schedulers.Schedulers
 /**
  * Created by  Nitin on 2020-03-12.
  */
-class ItemDataSource(var compositeDisposable: CompositeDisposable) :
+class ItemDataSource(
+    var compositeDisposable: CompositeDisposable,
+    var tag: String
+) :
     PageKeyedDataSource<Int, Photo>() {
 
 
@@ -26,18 +29,21 @@ class ItemDataSource(var compositeDisposable: CompositeDisposable) :
 
             APIAccess.getPostService()
                 .getImageItemList(
-                    AppConstant.TAG,
+                    tag,
                     AppConstant.FIRST_PAGE,
                     AppConstant.PAGE_ITEM,
                     BuildConfig.FLICKR_API_KEY
                 )
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { flickr ->
+                .subscribe({ flickr ->
 
                     callback.onResult(flickr.photos.photo, null, AppConstant.FIRST_PAGE + 1)
 
-                }
+                }, {
+
+                    handleError(it.message)
+                })
 
 
         )
@@ -49,49 +55,36 @@ class ItemDataSource(var compositeDisposable: CompositeDisposable) :
         compositeDisposable.add(
             APIAccess.getPostService()
                 .getImageItemList(
-                    AppConstant.TAG,
+                    tag,
                     params.key,
                     AppConstant.PAGE_ITEM,
                     BuildConfig.FLICKR_API_KEY
                 )
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { flickr ->
+                .subscribe({ flickr ->
 
                     val key = if (params.key > 1) params.key + 1 else null
 
                     callback.onResult(flickr.photos.photo, key)
 
 
-                }
+                }, {
+                    handleError(it.message)
+                })
 
         )
 
     }
 
     override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, Photo>) {
-        compositeDisposable.add(
-
-            APIAccess.getPostService()
-                .getImageItemList(
-                    AppConstant.TAG,
-                    params.key,
-                    AppConstant.PAGE_ITEM,
-                    BuildConfig.FLICKR_API_KEY
-                )
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { flickr ->
-
-                    val key = if (params.key > 1) params.key - 1 else null
-
-                    callback.onResult(flickr.photos.photo, key)
-
-
-                }
-
-        )
 
 
     }
+
+
+    private fun handleError(exception: String?) {
+
+    }
+
 }

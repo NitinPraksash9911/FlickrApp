@@ -3,4 +3,5 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="an_error_two">somethibd went wrong</string>
 </resources>

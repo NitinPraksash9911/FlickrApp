@@ -2,13 +2,16 @@ package com.example.nitinflicker.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PageKeyedDataSource
 import androidx.paging.PagedList
-import com.example.nitinflicker.adapter.ItemSourceFactory
 import com.example.nitinflicker.model.Photo
+import com.example.nitinflicker.repository.ItemDataSource
+import com.example.nitinflicker.repository.ItemSourceFactory
 import com.example.nitinflicker.utils.AppConstant
+import com.example.nitinflicker.utils.NetworkState
 import io.reactivex.disposables.CompositeDisposable
 
 
@@ -20,11 +23,14 @@ class DataViewModel : ViewModel() {
     private var compositeDisposable = CompositeDisposable()
     var itemPageList: LiveData<PagedList<Photo>>
     var liveDataSource: LiveData<PageKeyedDataSource<Int, Photo>>
-    var filterTextAll = MutableLiveData<String>()
-    var tag: String = ""
+    var searchData = MutableLiveData<String>()
 
     init {
-        val itemDatasourcefactory = ItemSourceFactory(compositeDisposable)
+        val itemDatasourcefactory =
+            ItemSourceFactory(
+                "",
+                compositeDisposable
+            )
         liveDataSource = itemDatasourcefactory.mutableLiveData
 
         val config = PagedList.Config.Builder()
@@ -34,11 +40,19 @@ class DataViewModel : ViewModel() {
             .build()
 
 
-        itemPageList = LivePagedListBuilder<Int, Photo>(itemDatasourcefactory, config).build()
+        itemPageList = Transformations.switchMap(searchData) {
+            LivePagedListBuilder(itemDatasourcefactory.apply {
+                this.tag = it
+
+            }, config).build()
+        }
     }
 
     override fun onCleared() {
         super.onCleared()
         compositeDisposable.dispose()
     }
+
+
+
 }

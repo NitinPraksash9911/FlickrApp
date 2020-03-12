@@ -1,6 +1,5 @@
 package com.example.nitinflicker.view
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -9,6 +8,7 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.databinding.DataBindingUtil
 import com.example.nitinflicker.R
 import com.example.nitinflicker.databinding.ActivityMainBinding
+import com.example.nitinflicker.utils.AppConstant
 
 
 /**
@@ -23,16 +23,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        mainBinding.eventHandler = EvenHandler()
+        mainBinding.eventHandler = EvenHandler(mainBinding)
 
     }
 
-    class EvenHandler() {
+    class EvenHandler(var mainBinding: ActivityMainBinding) {
 
         fun gotoResultScreen(view: View) {
 
             val intent = Intent(view.context, ResultScreen::class.java)
-//            intent.putExtra("tag", value)
+            intent.putExtra(AppConstant.TAG, mainBinding.searchBox.text.toString())
             startActivity(view.context, intent, null)
 
         }
