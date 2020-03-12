@@ -5,6 +5,10 @@ object AppConstant {
     const val SMALL = "n"
     const val MEDIUM = "-"
 
+    const val PAGE_ITEM= 20
+    const val FIRST_PAGE = 1
+    const val TAG = "Cat"
+
     fun getImageUrl(
         id: String,
         secret: String,

@@ -34,7 +34,7 @@ class GetImageRepo {
     fun searchImage(searchTag: String, pageNo: Int, perPage: Int, apiKey: String): Disposable {
         val callImageRepo = APIAccess.getPostService()
             .getImageItemList(query = searchTag, page = pageNo, perPage = perPage, apikey = apiKey)
-            .subscribeOn(Schedulers.io())
+            .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ flickr ->
 

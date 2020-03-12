@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import com.example.nitinflicker.R
 import com.example.nitinflicker.databinding.ActivityMainBinding
 
+
 /**
  * Created by Nitin  on 2020-03-11.
  */
@@ -22,14 +23,17 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        mainBinding.eventHandler = EvenHandler(this)
+        mainBinding.eventHandler = EvenHandler()
 
     }
 
-    class EvenHandler(var context: Context) {
+    class EvenHandler() {
 
         fun gotoResultScreen(view: View) {
-            startActivity(context, Intent(view.context, ResultScreen::class.java), null)
+
+            val intent = Intent(view.context, ResultScreen::class.java)
+//            intent.putExtra("tag", value)
+            startActivity(view.context, intent, null)
 
         }
     }
