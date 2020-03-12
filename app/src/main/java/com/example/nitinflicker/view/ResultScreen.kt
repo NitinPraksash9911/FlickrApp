@@ -10,6 +10,7 @@ import com.example.nitinflicker.BuildConfig
 import com.example.nitinflicker.R
 import com.example.nitinflicker.adapter.ImageAdapter
 import com.example.nitinflicker.databinding.ActivityResultScreenBinding
+import com.example.nitinflicker.model.Photo
 import com.example.nitinflicker.viewmodel.ImageLoadViewModel
 
 class ResultScreen : AppCompatActivity() {
@@ -32,8 +33,6 @@ class ResultScreen : AppCompatActivity() {
         resultScreenBinding.listView.layoutManager = LinearLayoutManager(this)
         imageAdapter = ImageAdapter()
         resultScreenBinding.listView.adapter = imageAdapter
-
-
         initObserver()
 
     }
@@ -43,8 +42,9 @@ class ResultScreen : AppCompatActivity() {
 
         imageLoadViewModel.photoLiveData.observe(this, Observer {
 
-            imageAdapter.setListData(it)
-
+            if (it != null) {
+                imageAdapter.setListData(it as ArrayList<Photo>)
+            }
 
         })
 

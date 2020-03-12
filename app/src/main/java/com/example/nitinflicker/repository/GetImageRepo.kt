@@ -1,14 +1,12 @@
 package com.example.nitinflicker.repository
 
-import android.util.Log
-import com.example.nitinflicker.model.FlickrData
+import androidx.lifecycle.MutableLiveData
 import com.example.nitinflicker.model.Photo
 import com.example.nitinflicker.network.APIAccess
-import io.reactivex.Observable
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import java.util.concurrent.TimeUnit
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
+import java.util.*
 
 
 /**
@@ -16,9 +14,12 @@ import java.util.concurrent.TimeUnit
  */
 class GetImageRepo {
 
+    val data = MutableLiveData<ArrayList<Photo>>()
+
     /*singleton object*/
     companion object {
         var imageRepo: GetImageRepo? = null
+
 
         fun getInstanceOfRepo(): GetImageRepo {
 
@@ -30,34 +31,24 @@ class GetImageRepo {
     }
 
 
-    fun searchImage(searchTag: String, pageNo: Int, perPage: Int, apiKey:String): Observable<ArrayList<Photo>> {
-
-        var data = ArrayList<Photo>()
-
+    fun searchImage(searchTag: String, pageNo: Int, perPage: Int, apiKey: String): Disposable {
         val callImageRepo = APIAccess.getPostService()
-            ?.getImageItemList("cat",1,20,"fe15b47ed990b3cd69cb4d27130d9876")
+            .getImageItemList(query = searchTag, page = pageNo, perPage = perPage, apikey = apiKey)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ flickr ->
 
-        callImageRepo?.enqueue(object : Callback<FlickrData> {
-            override fun onResponse(
-                call: Call<FlickrData>?,
-                response: Response<FlickrData>
-            ) {
-
-                data= response.body()!!.photos.photo
-                Log.d("apicall", response.body()!!.photos.total)
-            }
-
-            override fun onFailure(call: Call<FlickrData>?, t: Throwable?) {
-
-                Log.d("apicall", t?.message)
-
-//                data.addAll(arrayListOf())
+                data.value = flickr.photos.photo as ArrayList<Photo>
 
 
-            }
-        })
+            }, {
 
-        return Observable.just(data)
+                data.value = arrayListOf()
+            })
+
+
+        return callImageRepo
+
 
     }
 }

@@ -12,7 +12,7 @@ import com.example.nitinflicker.utils.AppConstant
  * Created by  Nitin on 2020-03-11.
  */
 class ImageAdapter : RecyclerView.Adapter<ImageAdapter.ImageViewHolder>() {
-    private var imageList: List<Photo> = listOf(Photo())
+    private var imageList = arrayListOf<Photo>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageViewHolder {
 
@@ -34,7 +34,7 @@ class ImageAdapter : RecyclerView.Adapter<ImageAdapter.ImageViewHolder>() {
     }
 
     /*set list data*/
-    fun setListData(photoList: List<Photo>) {
+    fun setListData(photoList: ArrayList<Photo>) {
         this.imageList = photoList
         notifyDataSetChanged()
     }
@@ -44,7 +44,7 @@ class ImageAdapter : RecyclerView.Adapter<ImageAdapter.ImageViewHolder>() {
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(photo: Photo?) {
-            if (photo?.id!=null) {
+            if (photo?.id != null) {
                 binding.imageUrl = AppConstant.getImageUrl(
                     photo.id,
                     photo.secret,
