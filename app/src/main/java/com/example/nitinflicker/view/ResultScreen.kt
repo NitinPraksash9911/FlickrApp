@@ -5,8 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.nitinflicker.R
 import com.example.nitinflicker.adapter.ImageListAdapter
 import com.example.nitinflicker.databinding.ActivityResultScreenBinding
@@ -29,7 +28,7 @@ class ResultScreen : AppCompatActivity() {
     fun init() {
         dataViewModel = ViewModelProvider(this).get(DataViewModel::class.java)
         dataViewModel.searchData.value = intent.getStringExtra(AppConstant.TAG)
-        resultScreenBinding.listView.layoutManager = StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)
+        resultScreenBinding.listView.layoutManager = GridLayoutManager(this,3,GridLayoutManager.VERTICAL,false)
         imageListAdapter = ImageListAdapter()
         resultScreenBinding.listView.adapter = imageListAdapter
 

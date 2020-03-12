@@ -8,6 +8,7 @@
 
         <import type="android.view.View" />
 
+
         <variable
             name="eventHandler"
             type="com.example.nitinflicker.view.MainActivity.EvenHandler" />
@@ -18,27 +19,38 @@
         android:layout_height="match_parent"
         tools:context=".view.MainActivity">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/search_box"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txt_in_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:importantForAutofill="no"
+            android:hint="@string/search_image"
             app:layout_constraintEnd_toEndOf="parent"
+            app:errorEnabled="true"
+            app:endIconDrawable="@drawable/ic_search_black_24dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/search_box"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                 />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/btn"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:onClick="@{(view)->eventHandler.gotoResultScreen(view)}"
-            android:text="call"
+            android:text="search"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/search_box" />
+            app:layout_constraintTop_toBottomOf="@id/txt_in_layout" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

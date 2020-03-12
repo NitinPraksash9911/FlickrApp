@@ -8,10 +8,8 @@ import androidx.paging.LivePagedListBuilder
 import androidx.paging.PageKeyedDataSource
 import androidx.paging.PagedList
 import com.example.nitinflicker.model.Photo
-import com.example.nitinflicker.repository.ItemDataSource
 import com.example.nitinflicker.repository.ItemSourceFactory
 import com.example.nitinflicker.utils.AppConstant
-import com.example.nitinflicker.utils.NetworkState
 import io.reactivex.disposables.CompositeDisposable
 
 

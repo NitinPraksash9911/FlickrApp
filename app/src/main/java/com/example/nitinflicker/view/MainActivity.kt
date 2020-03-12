@@ -29,11 +29,16 @@ class MainActivity : AppCompatActivity() {
 
     class EvenHandler(var mainBinding: ActivityMainBinding) {
 
-        fun gotoResultScreen(view: View) {
 
-            val intent = Intent(view.context, ResultScreen::class.java)
-            intent.putExtra(AppConstant.TAG, mainBinding.searchBox.text.toString())
-            startActivity(view.context, intent, null)
+        fun gotoResultScreen(view: View) {
+            val searchText = mainBinding.searchBox.text.toString()
+            if (searchText.isNotEmpty()) {
+                val intent = Intent(view.context, ResultScreen::class.java)
+                intent.putExtra(AppConstant.TAG, searchText)
+                startActivity(view.context, intent, null)
+            } else {
+                mainBinding.txtInLayout.error = "Empty box"
+            }
 
         }
     }
