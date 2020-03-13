@@ -8,13 +8,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.nitinflicker.databinding.ListItemViewBinding
 import com.example.nitinflicker.model.Photo
-import com.example.nitinflicker.utils.AppConstant
 
 
 /**
  * Created by Nitin  on 2020-03-12.
  */
-class ImageListAdapter : PagedListAdapter<Photo, ImageListAdapter.ImageViewHolder>(UserDiffCallback) {
+class ImageListAdapter :
+    PagedListAdapter<Photo, ImageListAdapter.ImageViewHolder>(UserDiffCallback) {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageViewHolder {
@@ -33,13 +33,16 @@ class ImageListAdapter : PagedListAdapter<Photo, ImageListAdapter.ImageViewHolde
 
         fun bind(photo: Photo?) {
             if (photo?.id != null) {
-                binding.imageUrl = AppConstant.getImageUrl(
-                    photo.id,
-                    photo.secret,
-                    photo.server,
-                    photo.farm,
-                    AppConstant.SMALL
-                )
+//                binding.imageUrl = AppConstant.getImageUrl(
+//                    photo.id,
+//                    photo.secret,
+//                    photo.server,
+//                    photo.farm,
+//                    AppConstant.SMALL
+//                )
+//                binding.titleTv.text = photo.title
+
+                binding.photo = photo
 
             }
         }

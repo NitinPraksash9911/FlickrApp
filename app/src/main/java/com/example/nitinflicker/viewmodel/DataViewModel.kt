@@ -24,11 +24,7 @@ class DataViewModel : ViewModel() {
     var searchData = MutableLiveData<String>()
 
     init {
-        val itemDatasourcefactory =
-            ItemSourceFactory(
-                "",
-                compositeDisposable
-            )
+        val itemDatasourcefactory = ItemSourceFactory("", compositeDisposable)
         liveDataSource = itemDatasourcefactory.mutableLiveData
 
         val config = PagedList.Config.Builder()
@@ -38,6 +34,7 @@ class DataViewModel : ViewModel() {
             .build()
 
 
+        // getting list by search tag
         itemPageList = Transformations.switchMap(searchData) {
             LivePagedListBuilder(itemDatasourcefactory.apply {
                 this.tag = it
@@ -48,9 +45,9 @@ class DataViewModel : ViewModel() {
 
     override fun onCleared() {
         super.onCleared()
-        compositeDisposable.dispose()
+        if (!compositeDisposable.isDisposed)
+            compositeDisposable.dispose()
     }
-
 
 
 }

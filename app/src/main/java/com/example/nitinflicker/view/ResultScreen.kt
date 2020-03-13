@@ -21,22 +21,45 @@ class ResultScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         resultScreenBinding = DataBindingUtil.setContentView(this, R.layout.activity_result_screen)
 
+
+        //action bar
+        setActionBar()
+
         //initialization
         init()
     }
 
-    fun init() {
+    private fun setActionBar() {
+        val actionbar = supportActionBar
+        actionbar!!.title = getString(R.string.galllery)
+        actionbar.setDisplayHomeAsUpEnabled(true)
+        actionbar.setDisplayHomeAsUpEnabled(true)
+    }
+
+    private fun init() {
         dataViewModel = ViewModelProvider(this).get(DataViewModel::class.java)
         dataViewModel.searchData.value = intent.getStringExtra(AppConstant.TAG)
-        resultScreenBinding.listView.layoutManager = GridLayoutManager(this,3,GridLayoutManager.VERTICAL,false)
+        resultScreenBinding.listView.layoutManager =
+            GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
         imageListAdapter = ImageListAdapter()
         resultScreenBinding.listView.adapter = imageListAdapter
 
+        //data observer
+        initObserver()
+
+    }
+
+    private fun initObserver() {
         dataViewModel.itemPageList.observe(this, Observer {
 
             imageListAdapter.submitList(it)
 
         })
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 
 
